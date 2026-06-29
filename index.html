@@ -15,18 +15,22 @@
         }
 
         :root {
-            --bg-color: #fbf9f6;
             --primary-color: #2c4c38;
             --secondary-color: #dfb15b;
             --text-dark: #222222;
-            --text-light: #666666;
+            --text-light: #444444; /* Dibuat sedikit lebih gelap agar terbaca */
             --white: #ffffff;
-            --card-bg: #ffffff;
-            --border-color: #e5e0da;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(229, 224, 218, 0.6);
         }
 
         body {
-            background-color: var(--bg-color);
+            /* Menggunakan gambar yang diunggah sebagai background */
+            background-image: url('hijau dan dan oren modern seminar bisnis banner lanscape_20260629_104603_0004 (1).jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-color: #fbf9f6; /* Fallback */
             color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
@@ -36,19 +40,31 @@
         ul { list-style: none; }
         img { max-width: 100%; height: auto; display: block; }
 
-        .container {
-            width: 90%;
+        /* --- GLASSMORPHISM SECTION WRAPPER --- */
+        /* Membuat section melayang di atas background agar UI lebih modern */
+        .glass-section {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            margin: 40px auto;
+            border-radius: 20px;
+            width: 92%;
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.4);
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 60px 5%;
         }
 
         .section-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary-color);
             text-align: center;
             margin-bottom: 15px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -57,16 +73,28 @@
             text-align: center;
             color: var(--text-light);
             max-width: 700px;
-            margin: 0 auto 40px auto;
-            font-size: 1rem;
+            margin: 0 auto 50px auto;
+            font-size: 1.05rem;
+        }
+
+        /* --- ANIMATION CLASSES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- NAVBAR & HAMBURGER --- */
         header {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            background-color: rgba(251, 249, 246, 0.95);
-            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             z-index: 1000;
             transition: all 0.3s ease;
         }
@@ -87,11 +115,11 @@
 
         .nav-links { display: flex; gap: 30px; }
         .nav-links a {
-            font-size: 0.95rem; font-weight: 500;
+            font-size: 0.95rem; font-weight: 600;
             color: var(--text-dark); transition: color 0.3s ease;
             text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .nav-links a:hover { color: var(--primary-color); }
+        .nav-links a:hover { color: var(--secondary-color); }
 
         .hamburger {
             display: none; cursor: pointer; flex-direction: column; gap: 6px;
@@ -105,10 +133,10 @@
         .mobile-menu {
             position: fixed; top: 70px; left: -100%;
             width: 100%; height: calc(100vh - 70px);
-            background-color: var(--bg-color);
+            background-color: rgba(255, 255, 255, 0.98);
             display: flex; flex-direction: column; align-items: center;
             padding-top: 50px; gap: 25px; transition: left 0.4s ease;
-            border-top: 1px solid var(--border-color); z-index: 999;
+            z-index: 999;
         }
         .mobile-menu.active { left: 0; }
         .mobile-menu a {
@@ -122,176 +150,200 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            padding: 180px 0 120px 0;
-            background: linear-gradient(rgba(251, 249, 246, 0.6), rgba(251, 249, 246, 0.8)), url('hero_bg.jpg') no-repeat center center/cover;
-            text-align: center; border-bottom: 1px solid var(--border-color);
+            padding: 200px 5% 140px 5%;
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95)), url('hero_bg.jpg') no-repeat center center/cover;
+            text-align: center; 
+            margin-top: 70px; /* Offset for fixed header */
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .hero-badge {
-            display: inline-block; padding: 6px 16px;
-            background-color: rgba(44, 76, 56, 0.1);
-            color: var(--primary-color); border-radius: 50px;
-            font-size: 0.85rem; font-weight: 600; margin-bottom: 20px;
-            text-transform: uppercase; letter-spacing: 1px;
+            display: inline-block; padding: 8px 20px;
+            background-color: var(--secondary-color);
+            color: var(--white); border-radius: 50px;
+            font-size: 0.85rem; font-weight: 700; margin-bottom: 25px;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            box-shadow: 0 5px 15px rgba(223, 177, 91, 0.4);
         }
 
         .hero h1 {
-            font-size: 3.5rem; color: var(--primary-color);
-            line-height: 1.2; margin-bottom: 15px; font-weight: 800; letter-spacing: -1px;
+            font-size: 4rem; color: var(--primary-color);
+            line-height: 1.1; margin-bottom: 20px; font-weight: 900; letter-spacing: -1px;
         }
 
         .hero p {
-            font-size: 1.25rem; color: var(--text-light);
-            max-width: 600px; margin: 0 auto 35px auto; font-style: italic;
+            font-size: 1.3rem; color: var(--text-light);
+            max-width: 600px; margin: 0 auto 35px auto; font-style: italic; font-weight: 500;
         }
 
         .btn {
-            display: inline-block; padding: 14px 35px;
+            display: inline-block; padding: 15px 40px;
             background-color: var(--primary-color); color: var(--white);
-            font-weight: 600; border-radius: 4px; transition: all 0.3s ease;
-            text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;
-            border: 1px solid var(--primary-color); cursor: pointer;
+            font-weight: 700; border-radius: 50px; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem;
+            box-shadow: 0 8px 20px rgba(44, 76, 56, 0.3);
         }
-        .btn:hover { background-color: transparent; color: var(--primary-color); }
+        .btn:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(44, 76, 56, 0.4);
+        }
 
-        /* --- SPLIT CONTENT --- */
+        /* --- SPLIT CONTENT (Dipercantik) --- */
         .split-section {
             display: table; width: 100%; table-layout: fixed;
-            border-collapse: collapse; background-color: var(--white);
+            border-collapse: collapse;
         }
         .split-row { display: table-row; }
         .split-col { display: table-cell; width: 50%; vertical-align: middle; }
-        .split-text { padding: 80px 10%; }
-        .split-text h2 { font-size: 2rem; color: var(--primary-color); margin-bottom: 20px; font-weight: 700; }
-        .split-text p { color: var(--text-light); margin-bottom: 15px; font-size: 1.05rem; text-align: justify; }
-        .split-img { height: 100%; min-height: 450px; overflow: hidden; position: relative; }
+        .split-text { padding: 80px 8%; }
+        .split-text h2 { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 25px; font-weight: 800; line-height: 1.2;}
+        .split-text p { color: var(--text-light); margin-bottom: 20px; font-size: 1.1rem; text-align: justify; }
+        .split-img { height: 100%; min-height: 500px; overflow: hidden; position: relative; }
         .split-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
 
         /* --- PRODUCT VARIANT --- */
-        .product-section { background-color: #f7f4f0; }
         .variant-grid {
-            display: table; width: 100%; table-layout: fixed;
-            border-collapse: separate; border-spacing: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
         }
         .variant-card {
-            display: table-cell; background-color: var(--card-bg);
-            border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02); vertical-align: top;
+            background-color: var(--card-bg);
+            border-radius: 16px; overflow: hidden; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
         }
-        .variant-image-holder { height: 300px; overflow: hidden; position: relative; }
-        .variant-image-holder img { width: 100%; height: 100%; object-fit: cover; }
+        .variant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+        .variant-image-holder { height: 320px; overflow: hidden; position: relative; }
+        .variant-image-holder img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .variant-card:hover .variant-image-holder img { transform: scale(1.05); }
         .variant-badge {
-            position: absolute; top: 20px; left: 20px; background-color: var(--primary-color);
-            color: var(--white); padding: 5px 12px; font-size: 0.75rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; z-index: 5;
+            position: absolute; top: 20px; left: 20px; background-color: var(--secondary-color);
+            color: var(--white); padding: 6px 15px; font-size: 0.8rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px; border-radius: 50px; z-index: 5;
+            box-shadow: 0 4px 10px rgba(223, 177, 91, 0.4);
         }
-        .variant-content { padding: 35px; }
-        .variant-title { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 10px; font-weight: 700; }
-        .variant-desc { color: var(--text-light); font-size: 0.95rem; margin-bottom: 20px; min-height: 75px; }
-        .variant-options { background-color: var(--bg-color); padding: 15px; border-radius: 6px; margin-bottom: 25px; }
-        .options-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+        .variant-content { padding: 40px; }
+        .variant-title { font-size: 1.6rem; color: var(--primary-color); margin-bottom: 12px; font-weight: 800; }
+        .variant-desc { color: var(--text-light); font-size: 1rem; margin-bottom: 25px; min-height: 75px; }
+        .variant-options { background-color: rgba(0,0,0,0.03); padding: 20px; border-radius: 10px; margin-bottom: 25px; }
+        .options-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; color: var(--text-dark);}
         .size-selectors { display: flex; gap: 15px; margin-bottom: 15px; }
         .size-label {
-            flex: 1; text-align: center; padding: 10px; border: 1px solid var(--border-color);
-            border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem; background-color: var(--white);
+            flex: 1; text-align: center; padding: 12px; border: 2px solid var(--border-color);
+            border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.95rem; background-color: var(--white);
+            transition: all 0.2s ease;
         }
         .size-selectors input[type="radio"] { display: none; }
-        .size-selectors input[type="radio"]:checked + .size-label { background-color: var(--primary-color); color: var(--white); border-color: var(--primary-color); }
-        .price-display { font-size: 1.4rem; font-weight: 700; color: var(--primary-color); }
-        .order-actions { display: flex; flex-direction: column; gap: 10px; }
-        .btn-order {
-            padding: 12px; font-size: 0.9rem; font-weight: 600; border-radius: 4px;
-            cursor: pointer; text-transform: uppercase; border: none; text-align: center; color: var(--white);
+        .size-selectors input[type="radio"]:checked + .size-label { 
+            background-color: var(--primary-color); color: var(--white); border-color: var(--primary-color); 
         }
-        .btn-wa { background-color: #25d366; } .btn-wa:hover { background-color: #1ebd54; }
-        .btn-shopee { background-color: #ee4d2d; } .btn-shopee:hover { background-color: #d73c1d; }
+        .price-display { font-size: 1.6rem; font-weight: 800; color: var(--primary-color); }
+        .order-actions { display: flex; flex-direction: column; gap: 12px; }
+        .btn-order {
+            padding: 14px; font-size: 0.95rem; font-weight: 700; border-radius: 8px;
+            cursor: pointer; text-transform: uppercase; border: none; text-align: center; color: var(--white);
+            transition: all 0.3s ease;
+        }
+        .btn-wa { background-color: #25d366; } .btn-wa:hover { background-color: #1ebd54; transform: translateY(-2px); }
+        .btn-shopee { background-color: #ee4d2d; } .btn-shopee:hover { background-color: #d73c1d; transform: translateY(-2px); }
 
-        /* --- REVIEWS GRID (Diperbarui) --- */
-        .reviews-section { background-color: var(--white); }
+        /* --- REVIEWS GRID --- */
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            margin-top: 30px;
+            gap: 30px;
+            margin-top: 60px;
         }
         .review-card {
-            background-color: var(--bg-color); 
+            background-color: var(--card-bg); 
             border: 1px solid var(--border-color); 
-            border-radius: 12px;
-            padding: 40px 25px 25px 25px; 
+            border-radius: 16px;
+            padding: 45px 30px 30px 30px; 
             text-align: center; 
-            box-shadow: 0 5px 20px rgba(44, 76, 56, 0.05);
-            margin-top: 30px; /* Space for avatar */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-top: 35px; /* Space for avatar */
+            transition: transform 0.3s ease;
         }
+        .review-card:hover { transform: translateY(-8px); }
         .review-user-avatar {
-            width: 70px; height: 70px; background-color: var(--border-color); border-radius: 50%;
-            margin: -75px auto 15px auto; border: 5px solid var(--white); overflow: hidden;
-            display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 1.5rem; font-weight: bold;
+            width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 50%;
+            margin: -85px auto 20px auto; border: 6px solid var(--white); overflow: hidden;
+            display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.8rem; font-weight: 800;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .stars { color: var(--secondary-color); font-size: 1.2rem; margin-bottom: 15px; }
-        .review-text { font-size: 0.95rem; color: var(--text-dark); font-style: italic; margin-bottom: 25px; line-height: 1.6; min-height: 80px; }
-        .review-user { font-weight: 700; color: var(--primary-color); font-size: 0.9rem; text-transform: uppercase; border-top: 1px solid var(--border-color); padding-top: 15px; display: inline-block; }
+        .stars { color: var(--secondary-color); font-size: 1.3rem; margin-bottom: 15px; }
+        .review-text { font-size: 1rem; color: var(--text-dark); font-style: italic; margin-bottom: 25px; line-height: 1.7; min-height: 80px; }
+        .review-user { font-weight: 800; color: var(--primary-color); font-size: 0.95rem; text-transform: uppercase; border-top: 1px solid var(--border-color); padding-top: 20px; display: inline-block; }
 
         /* --- TESTIMONI GRID --- */
-        .testi-section { background-color: #f7f4f0; }
-        .testi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; }
+        .testi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 30px; }
         .testi-item {
-            background-color: var(--white); border: 1px solid var(--border-color); aspect-ratio: 1;
-            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border-radius: 4px;
+            background-color: var(--border-color); aspect-ratio: 1;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s ease;
         }
+        .testi-item:hover { transform: scale(1.05); z-index: 2; }
         .testi-item img { width: 100%; height: 100%; object-fit: cover; }
-        .testi-placeholder {
-            position: absolute; font-size: 0.75rem; color: var(--text-light); text-align: center;
-            background-color: rgba(255,255,255,0.9); width: 100%; padding: 5px; bottom: 0; border-top: 1px solid var(--border-color); z-index: 2;
-        }
+        /* Tulisan testi placeholder dihapus melalui JS */
 
         /* --- MITRA SECTION --- */
-        .mitra-section { background-color: var(--white); }
-        .mitra-box-grid { display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 30px 0; }
-        .mitra-card {
-            display: table-cell; background-color: var(--bg-color); border-radius: 6px;
-            border: 1px solid var(--border-color); vertical-align: top; overflow: hidden; position: relative;
+        .mitra-box-grid { 
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; 
         }
-        .mitra-content { padding: 30px; }
-        .mitra-title { font-size: 1.3rem; color: var(--primary-color); margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; }
-        .mitra-list li { position: relative; padding-left: 20px; margin-bottom: 10px; font-size: 0.95rem; color: var(--text-dark); }
-        .mitra-list li::before { content: "•"; color: var(--secondary-color); font-weight: bold; font-size: 1.2rem; position: absolute; left: 0; top: -2px; }
+        .mitra-card {
+            background-color: var(--card-bg); border-radius: 16px;
+            border: 1px solid var(--border-color); overflow: hidden; position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+        }
+        .mitra-card:hover { transform: translateY(-8px); }
+        .mitra-content { padding: 40px; }
+        .mitra-title { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 20px; font-weight: 800; border-bottom: 2px solid rgba(223, 177, 91, 0.3); padding-bottom: 12px; }
+        .mitra-list li { position: relative; padding-left: 25px; margin-bottom: 12px; font-size: 1.05rem; color: var(--text-dark); font-weight: 500;}
+        .mitra-list li::before { content: "✓"; color: var(--secondary-color); font-weight: bold; font-size: 1.2rem; position: absolute; left: 0; top: -2px; }
         
-        .mitra-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); }
-        .mitra-photo-item { aspect-ratio: 1; border-radius: 4px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--white); position: relative; }
+        .mitra-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--border-color); }
+        .mitra-photo-item { aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--white); position: relative; }
         .mitra-photo-item img { width: 100%; height: 100%; object-fit: cover; }
-        .mitra-photo-label { position: absolute; bottom: 0; left: 0; font-size: 0.65rem; color: var(--text-light); background-color: rgba(255,255,255,0.9); width: 100%; padding: 2px; text-align: center; }
+        .mitra-photo-label { position: absolute; bottom: 0; left: 0; font-size: 0.7rem; font-weight: 600; color: var(--text-dark); background-color: rgba(255,255,255,0.9); width: 100%; padding: 4px; text-align: center; }
 
         /* --- FOOTER --- */
-        footer { background-color: var(--primary-color); color: var(--white); padding: 70px 0 30px 0; }
-        .footer-grid { display: table; width: 100%; table-layout: fixed; }
-        .footer-col { display: table-cell; padding: 0 20px; vertical-align: top; }
-        .footer-logo { font-size: 1.8rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 15px; color: var(--secondary-color); }
-        .footer-tagline { font-size: 0.95rem; opacity: 0.8; margin-bottom: 20px; font-style: italic; }
-        .footer-heading { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; color: var(--secondary-color); }
-        .contact-info li { margin-bottom: 15px; font-size: 0.95rem; opacity: 0.9; }
-        .contact-info strong { display: block; color: var(--white); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 3px; opacity: 0.6; }
-        .social-links { display: flex; gap: 15px; margin-top: 10px; }
-        .social-link { background-color: rgba(255,255,255,0.1); padding: 10px 18px; font-size: 0.9rem; border-radius: 4px; font-weight: 500; }
-        .social-link:hover { background-color: var(--secondary-color); color: var(--primary-color); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 50px; padding-top: 25px; text-align: center; font-size: 0.85rem; opacity: 0.6; }
+        footer { background-color: var(--primary-color); color: var(--white); padding: 80px 0 30px 0; margin-top: 60px;}
+        .footer-grid { display: grid; grid-template-columns: 2fr 1.5fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; width: 90%;}
+        .footer-logo { font-size: 2rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 15px; color: var(--secondary-color); }
+        .footer-tagline { font-size: 1.05rem; opacity: 0.9; margin-bottom: 25px; font-style: italic; }
+        .footer-heading { font-size: 1.2rem; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; color: var(--secondary-color); letter-spacing: 1px;}
+        .contact-info li { margin-bottom: 18px; font-size: 1rem; opacity: 0.9; }
+        .contact-info strong { display: block; color: var(--white); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 5px; opacity: 0.7; letter-spacing: 0.5px;}
+        .social-links { display: flex; gap: 15px; margin-top: 15px; }
+        .social-link { background-color: rgba(255,255,255,0.1); padding: 12px 20px; font-size: 0.95rem; border-radius: 50px; font-weight: 600; transition: all 0.3s ease;}
+        .social-link:hover { background-color: var(--secondary-color); color: var(--primary-color); transform: translateY(-3px);}
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; padding-top: 30px; text-align: center; font-size: 0.9rem; opacity: 0.7; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
             .nav-links { display: none; } .hamburger { display: flex; }
-            .split-col, .variant-card, .mitra-card, .footer-col { display: block; width: 100%; margin-bottom: 30px; }
-            .split-img { height: 300px; min-height: 300px; } .split-text { padding: 40px 5%; }
-            .variant-grid, .mitra-box-grid, .footer-grid { display: block; width: 100%; }
-            .testi-grid { grid-template-columns: repeat(3, 1fr); }
+            .split-col { display: block; width: 100%; }
+            .split-img { height: 350px; min-height: 350px; } .split-text { padding: 50px 8%; }
+            .variant-grid, .mitra-box-grid, .footer-grid { grid-template-columns: 1fr; }
+            .testi-grid { grid-template-columns: repeat(4, 1fr); }
             .reviews-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero h1 { font-size: 2.5rem; } 
+            .hero h1 { font-size: 3rem; } 
+            .glass-section { width: 95%; }
         }
         @media (max-width: 600px) {
             .reviews-grid { grid-template-columns: 1fr; }
+            .testi-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero h1 { font-size: 2.5rem; }
         }
-        @media (max-width: 500px) {
+        @media (max-width: 400px) {
             .testi-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero h1 { font-size: 2rem; } .mitra-photos-grid { grid-template-columns: repeat(2, 1fr); }
+            .mitra-photos-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -323,19 +375,17 @@
         <a href="#kontak" onclick="toggleMenu()">Kontak</a>
     </div>
 
-    <section class="hero">
-        <div class="container">
-            <span class="hero-badge">Inovasi Lokal Indonesia</span>
-            <h1>HELMORA</h1>
-            <p>"Bersih helmmu, kembalikan auramu"</p>
-            <div style="font-size: 1rem; color: var(--text-light); max-width: 650px; margin: -15px auto 35px auto; line-height: 1.5;">
-                Spray penghilang bau dan bakteri pada helm dengan ekstrak buah lokal dan daun sirih. Menjaga kenyamanan dan kebersihan perjalanan Anda secara instan dan alami.
-            </div>
-            <a href="#varian" class="btn">Lihat Varian Produk</a>
+    <section class="hero reveal">
+        <span class="hero-badge">Inovasi Lokal Indonesia</span>
+        <h1>HELMORA</h1>
+        <p>"Bersih helmmu, kembalikan auramu"</p>
+        <div style="font-size: 1.1rem; color: var(--text-dark); max-width: 700px; margin: -10px auto 40px auto; line-height: 1.6; font-weight: 500;">
+            Spray penghilang bau dan bakteri pada helm dengan ekstrak buah lokal dan daun sirih. Menjaga kenyamanan dan kebersihan perjalanan Anda secara instan dan alami.
         </div>
+        <a href="#varian" class="btn">Lihat Varian Produk</a>
     </section>
 
-    <section class="split-section">
+    <section class="glass-section split-section reveal">
         <div class="split-row">
             <div class="split-col">
                 <div class="split-text">
@@ -352,7 +402,7 @@
         </div>
     </section>
 
-    <section class="split-section" id="tentang" style="background-color: #f7f4f0;">
+    <section class="glass-section split-section reveal" id="tentang">
         <div class="split-row">
             <div class="split-col">
                 <div class="split-img">
@@ -369,111 +419,113 @@
         </div>
     </section>
 
-    <section class="product-section container" id="varian">
-        <h2 class="section-title">Varian Helmora</h2>
-        <p class="section-subtitle">Pilih varian aroma alami kegemaranmu dan sesuaikan ukuran botol dengan mobilitas harianmu.</p>
+    <section class="glass-section reveal" id="varian">
+        <div class="container">
+            <h2 class="section-title">Varian Helmora</h2>
+            <p class="section-subtitle">Pilih varian aroma alami kegemaranmu dan sesuaikan ukuran botol dengan mobilitas harianmu.</p>
 
-        <div class="variant-grid">
-            <div class="variant-card">
-                <div class="variant-image-holder">
-                    <img src="varian_lemon.jpg" alt="Helmora Lemon-Sirih">
-                    <span class="variant-badge">Fresh & Clean</span>
-                </div>
-                <div class="variant-content">
-                    <h3 class="variant-title">HELMORA LEMON-SIRIH</h3>
-                    <p class="variant-desc">Aroma clean dan fresh dari lemon asli Indonesia yang dipercaya efektif menetralisir bakteri penyebab bau tak sedap.</p>
-                    <div class="variant-options">
-                        <div class="options-title">Pilih Ukuran Botol:</div>
-                        <div class="size-selectors">
-                            <input type="radio" id="lemon-60" name="size-lemon" value="60ml" checked onclick="updatePrice('lemon', 10000)">
-                            <label for="lemon-60" class="size-label">60 ml</label>
-                            <input type="radio" id="lemon-100" name="size-lemon" value="100ml" onclick="updatePrice('lemon', 15000)">
-                            <label for="lemon-100" class="size-label">100 ml</label>
+            <div class="variant-grid">
+                <div class="variant-card reveal">
+                    <div class="variant-image-holder">
+                        <img src="varian_lemon.jpg" alt="Helmora Lemon-Sirih">
+                        <span class="variant-badge">Fresh & Clean</span>
+                    </div>
+                    <div class="variant-content">
+                        <h3 class="variant-title">HELMORA LEMON-SIRIH</h3>
+                        <p class="variant-desc">Aroma clean dan fresh dari lemon asli Indonesia yang dipercaya efektif menetralisir bakteri penyebab bau tak sedap.</p>
+                        <div class="variant-options">
+                            <div class="options-title">Pilih Ukuran Botol:</div>
+                            <div class="size-selectors">
+                                <input type="radio" id="lemon-60" name="size-lemon" value="60ml" checked onclick="updatePrice('lemon', 10000)">
+                                <label for="lemon-60" class="size-label">60 ml</label>
+                                <input type="radio" id="lemon-100" name="size-lemon" value="100ml" onclick="updatePrice('lemon', 15000)">
+                                <label for="lemon-100" class="size-label">100 ml</label>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                                <span style="font-size: 0.95rem; font-weight: 700; color: var(--text-light);">Harga:</span>
+                                <span class="price-display" id="price-lemon">Rp 10.000</span>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                            <span style="font-size: 0.9rem; font-weight: 500;">Harga:</span>
-                            <span class="price-display" id="price-lemon">Rp 10.000</span>
+                        <div class="order-actions">
+                            <button class="btn-order btn-wa" onclick="orderWhatsApp('HELMORA LEMON-SIRIH', 'size-lemon')">Order via WhatsApp</button>
+                            <a href="https://shopee.co.id/helmora_spray" target="_blank" class="btn-order btn-shopee">Order via Shopee</a>
                         </div>
                     </div>
-                    <div class="order-actions">
-                        <button class="btn-order btn-wa" onclick="orderWhatsApp('HELMORA LEMON-SIRIH', 'size-lemon')">Order via WhatsApp</button>
-                        <a href="https://shopee.co.id/helmora_spray" target="_blank" class="btn-order btn-shopee">Order via Shopee</a>
-                    </div>
                 </div>
-            </div>
 
-            <div class="variant-card">
-                <div class="variant-image-holder">
-                    <img src="varian_nanas.jpg" alt="Helmora Nanas-Sirih">
-                    <span class="variant-badge">Sweet & Smooth</span>
-                </div>
-                <div class="variant-content">
-                    <h3 class="variant-title">HELMORA NANAS-SIRIH</h3>
-                    <p class="variant-desc">Aroma yang lebih smooth dan sweet dari ciri khas buah nanas lokal pilihan, membuat perjalanan berkendara kian rileks.</p>
-                    <div class="variant-options">
-                        <div class="options-title">Pilih Ukuran Botol:</div>
-                        <div class="size-selectors">
-                            <input type="radio" id="nanas-60" name="size-nanas" value="60ml" checked onclick="updatePrice('nanas', 8000)">
-                            <label for="nanas-60" class="size-label">60 ml</label>
-                            <input type="radio" id="nanas-100" name="size-nanas" value="100ml" onclick="updatePrice('nanas', 13000)">
-                            <label for="nanas-100" class="size-label">100 ml</label>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                            <span style="font-size: 0.9rem; font-weight: 500;">Harga:</span>
-                            <span class="price-display" id="price-nanas">Rp 8.000</span>
-                        </div>
+                <div class="variant-card reveal">
+                    <div class="variant-image-holder">
+                        <img src="varian_nanas.jpg" alt="Helmora Nanas-Sirih">
+                        <span class="variant-badge">Sweet & Smooth</span>
                     </div>
-                    <div class="order-actions">
-                        <button class="btn-order btn-wa" onclick="orderWhatsApp('HELMORA NANAS-SIRIH', 'size-nanas')">Order via WhatsApp</button>
-                        <a href="https://shopee.co.id/helmora_spray" target="_blank" class="btn-order btn-shopee">Order via Shopee</a>
+                    <div class="variant-content">
+                        <h3 class="variant-title">HELMORA NANAS-SIRIH</h3>
+                        <p class="variant-desc">Aroma yang lebih smooth dan sweet dari ciri khas buah nanas lokal pilihan, membuat perjalanan berkendara kian rileks.</p>
+                        <div class="variant-options">
+                            <div class="options-title">Pilih Ukuran Botol:</div>
+                            <div class="size-selectors">
+                                <input type="radio" id="nanas-60" name="size-nanas" value="60ml" checked onclick="updatePrice('nanas', 8000)">
+                                <label for="nanas-60" class="size-label">60 ml</label>
+                                <input type="radio" id="nanas-100" name="size-nanas" value="100ml" onclick="updatePrice('nanas', 13000)">
+                                <label for="nanas-100" class="size-label">100 ml</label>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                                <span style="font-size: 0.95rem; font-weight: 700; color: var(--text-light);">Harga:</span>
+                                <span class="price-display" id="price-nanas">Rp 8.000</span>
+                            </div>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn-order btn-wa" onclick="orderWhatsApp('HELMORA NANAS-SIRIH', 'size-nanas')">Order via WhatsApp</button>
+                            <a href="https://shopee.co.id/helmora_spray" target="_blank" class="btn-order btn-shopee">Order via Shopee</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="reviews-section" id="ulasan">
+    <section class="glass-section reveal" id="ulasan">
         <div class="container">
             <h2 class="section-title">Ulasan Pelanggan</h2>
             <p class="section-subtitle">Apa kata mereka yang telah merasakan keharuman alami dan manfaat Helmora Spray?</p>
 
             <div class="reviews-grid">
-                <div class="review-card">
+                <div class="review-card reveal">
                     <div class="review-user-avatar">AP</div>
                     <div class="stars">★★★★★</div>
                     <p class="review-text">"Suka banget sama varian Lemon-Sirih! Aromanya segar lemon banget, ga bikin pusing pas dipakai jalan jauh."</p>
                     <h4 class="review-user">@andini_putri</h4>
                 </div>
                 
-                <div class="review-card">
+                <div class="review-card reveal">
                     <div class="review-user-avatar">RA</div>
                     <div class="stars">★★★★★</div>
                     <p class="review-text">"Beli yang Nanas-Sirih buat kado suami. Katanya enak, wanginya smooth ga nyengat sama sekali."</p>
                     <h4 class="review-user">@rizki_aditya</h4>
                 </div>
 
-                <div class="review-card">
+                <div class="review-card reveal">
                     <div class="review-user-avatar">BS</div>
                     <div class="stars">★★★★★</div>
                     <p class="review-text">"Solusi praktis buat ojek online biar penumpang selalu nyaman pakai helm cadangan. Helm ga bau apek lagi."</p>
                     <h4 class="review-user">@budi_santoso</h4>
                 </div>
 
-                <div class="review-card">
+                <div class="review-card reveal">
                     <div class="review-user-avatar">SN</div>
                     <div class="stars">★★★★★</div>
                     <p class="review-text">"Awalnya ragu ada campuran sirihnya, ternyata kombinasi lemonnya pas banget. Helm jadi wangi seharian."</p>
                     <h4 class="review-user">@siti_nur</h4>
                 </div>
 
-                <div class="review-card">
+                <div class="review-card reveal">
                     <div class="review-user-avatar">RM</div>
                     <div class="stars">★★★★★</div>
                     <p class="review-text">"Keren banget konsepnya ramah lingkungan dan memberdayakan UMKM lokal. Dukung terus produk asli Indonesia!"</p>
                     <h4 class="review-user">@rizka_maharani</h4>
                 </div>
 
-                <div class="review-card">
+                <div class="review-card reveal">
                     <div class="review-user-avatar">NS</div>
                     <div class="stars">★★★★★</div>
                     <p class="review-text">"Wajib punya buat pengendara harian. Harganya sangat terjangkau, isinya awet, dan wangi banget."</p>
@@ -483,7 +535,7 @@
         </div>
     </section>
 
-    <section class="testi-section" id="testimoni">
+    <section class="glass-section reveal" id="testimoni">
         <div class="container">
             <h2 class="section-title">Galeri Testimoni</h2>
             <p class="section-subtitle">Dokumentasi kepuasan pengguna Helmora dari berbagai aktivitas berkendara.</p>
@@ -491,32 +543,35 @@
         </div>
     </section>
 
-    <section class="mitra-section container" id="mitra">
-        <h2 class="section-title">Kemitraan Berkelanjutan</h2>
-        <div class="mitra-box-grid">
-            <div class="mitra-card">
-                <div class="mitra-content">
-                    <h3 class="mitra-title">Mitra Penyedia Bahan Baku</h3>
-                    <ul class="mitra-list">
-                        <li>Petani Daun Sirih Lokal</li><li>UMKM Kulit Nanas Kupas</li><li>Owner Bisnis Lemon Tea</li>
-                    </ul>
-                    <div class="mitra-photos-grid">
-                        <div class="mitra-photo-item"><img src="mitra1.jpg" alt="Petani Sirih"><div class="mitra-photo-label">Petani Sirih</div></div>
-                        <div class="mitra-photo-item"><img src="mitra2.jpg" alt="UMKM Nanas"><div class="mitra-photo-label">UMKM Nanas</div></div>
-                        <div class="mitra-photo-item"><img src="mitra3.jpg" alt="Lemon Tea"><div class="mitra-photo-label">Lemon Tea</div></div>
+    <section class="glass-section reveal" id="mitra">
+        <div class="container">
+            <h2 class="section-title">Kemitraan Berkelanjutan</h2>
+            <p class="section-subtitle">Helmora berkolaborasi dengan berbagai elemen masyarakat untuk menciptakan ekosistem bisnis yang saling menguntungkan.</p>
+            <div class="mitra-box-grid">
+                <div class="mitra-card reveal">
+                    <div class="mitra-content">
+                        <h3 class="mitra-title">Mitra Penyedia Bahan Baku</h3>
+                        <ul class="mitra-list">
+                            <li>Petani Daun Sirih Lokal</li><li>UMKM Kulit Nanas Kupas</li><li>Owner Bisnis Lemon Tea</li>
+                        </ul>
+                        <div class="mitra-photos-grid">
+                            <div class="mitra-photo-item"><img src="mitra1.jpg" alt="Petani Sirih"><div class="mitra-photo-label">Petani Sirih</div></div>
+                            <div class="mitra-photo-item"><img src="mitra2.jpg" alt="UMKM Nanas"><div class="mitra-photo-label">UMKM Nanas</div></div>
+                            <div class="mitra-photo-item"><img src="mitra3.jpg" alt="Lemon Tea"><div class="mitra-photo-label">Lemon Tea</div></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mitra-card">
-                <div class="mitra-content">
-                    <h3 class="mitra-title">Mitra Saluran Pemasaran</h3>
-                    <ul class="mitra-list">
-                        <li>Jasa Cuci Motor & Helm</li><li>Barbershop & Bengkel</li><li>Rental Motor Mahasiswa</li>
-                    </ul>
-                    <div class="mitra-photos-grid">
-                        <div class="mitra-photo-item"><img src="mitra4.jpg" alt="Cleaning Motor"><div class="mitra-photo-label">Cleaning Motor</div></div>
-                        <div class="mitra-photo-item"><img src="mitra5.jpg" alt="Cleaning Helm"><div class="mitra-photo-label">Cleaning Helm</div></div>
-                        <div class="mitra-photo-item"><img src="mitra6.jpg" alt="Seller Helm"><div class="mitra-photo-label">Seller Helm</div></div>
+                <div class="mitra-card reveal">
+                    <div class="mitra-content">
+                        <h3 class="mitra-title">Mitra Saluran Pemasaran</h3>
+                        <ul class="mitra-list">
+                            <li>Jasa Cuci Motor & Helm</li><li>Barbershop & Bengkel</li><li>Rental Motor Mahasiswa</li>
+                        </ul>
+                        <div class="mitra-photos-grid">
+                            <div class="mitra-photo-item"><img src="mitra4.jpg" alt="Cleaning Motor"><div class="mitra-photo-label">Cleaning Motor</div></div>
+                            <div class="mitra-photo-item"><img src="mitra5.jpg" alt="Cleaning Helm"><div class="mitra-photo-label">Cleaning Helm</div></div>
+                            <div class="mitra-photo-item"><img src="mitra6.jpg" alt="Seller Helm"><div class="mitra-photo-label">Seller Helm</div></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -524,62 +579,85 @@
     </section>
 
     <footer id="kontak">
-        <div class="container" style="padding: 0 0 40px 0;">
-            <div class="footer-grid">
-                <div class="footer-col" style="width: 40%;">
-                    <div class="footer-logo">HELMORA</div>
-                    <p class="footer-tagline">"Bersih helmmu, kembalikan auramu"</p>
-                    <div class="social-links">
-                        <a href="https://instagram.com/helmoraspray_official" target="_blank" class="social-link">Instagram</a>
-                        <a href="https://tiktok.com/@Helmoraspray" target="_blank" class="social-link">TikTok</a>
-                    </div>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">HELMORA</div>
+                <p class="footer-tagline">"Bersih helmmu, kembalikan auramu"</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/helmoraspray_official" target="_blank" class="social-link">Instagram</a>
+                    <a href="https://tiktok.com/@Helmoraspray" target="_blank" class="social-link">TikTok</a>
                 </div>
-                <div class="footer-col" style="width: 35%;">
-                    <h3 class="footer-heading">Hubungi Kami</h3>
-                    <ul class="contact-info">
-                        <li><strong>Surel Resmi</strong> helmoraspray.official@gmail.com</li>
-                        <li><strong>Lokasi Kantor</strong> Jl. Brotojoyo No. 1, Semarang Utara</li>
-                    </ul>
-                </div>
-                <div class="footer-col" style="width: 25%;">
-                    <h3 class="footer-heading">Layanan Pembelian</h3>
-                    <ul class="contact-info">
-                        <li><strong>Hotline WA</strong> 08989366557</li>
-                        <li><strong>Shopee</strong> helmora_spray</li>
-                    </ul>
-                </div>
+            </div>
+            <div>
+                <h3 class="footer-heading">Hubungi Kami</h3>
+                <ul class="contact-info">
+                    <li><strong>Surel Resmi</strong> helmoraspray.official@gmail.com</li>
+                    <li><strong>Lokasi Kantor</strong> Jl. Brotojoyo No. 1, Semarang Utara</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-heading">Layanan</h3>
+                <ul class="contact-info">
+                    <li><strong>Hotline WA</strong> 08989366557</li>
+                    <li><strong>Shopee</strong> helmora_spray</li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom"><p>&copy; 2026 HELMORA Indonesia. All Rights Reserved.</p></div>
     </footer>
 
     <script>
+        // Hamburger Menu Toggle
         function toggleMenu() {
             document.querySelector('.hamburger').classList.toggle('active');
             document.getElementById('mobileMenu').classList.toggle('active');
         }
 
+        // Update Price Dynamically
         function updatePrice(variant, price) {
             document.getElementById(`price-${variant}`).innerText = `Rp ${price.toLocaleString('id-ID')}`;
         }
 
+        // WhatsApp Order Logic
         function orderWhatsApp(variantName, radioName) {
             const size = document.querySelector(`input[name="${radioName}"]:checked`).value;
             const msg = encodeURIComponent(`Halo Helmora, saya mau pesan:\nVarian: ${variantName}\nUkuran: ${size}`);
             window.open(`https://wa.me/628989366557?text=${msg}`, '_blank');
         }
 
-        // Generate 20 Image Testimoni otomatis untuk mencegah kode kepotong
+        // Generate Image Testimoni tanpa tulisan/placeholder
         document.addEventListener("DOMContentLoaded", () => {
             const grid = document.getElementById('testiGrid');
             let html = '';
             for(let i=1; i<=20; i++) {
                 html += `<div class="testi-item">
                             <img src="testi${i}.jpg" alt="Testimoni ${i}">
-                            <div class="testi-placeholder">testi${i}.jpg</div>
-                         </div>`;
+                         </div>`; // Div placeholder "testi.jpg" sudah dihapus
             }
             grid.innerHTML = html;
+
+            // Intersection Observer untuk Animasi Smooth Scroll
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.1, // Elemen mulai muncul saat 10% masuk layar
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Animasi hanya berjalan 1 kali
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
         });
     </script>
 </body>
