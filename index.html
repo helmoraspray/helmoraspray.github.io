@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helmora - Bersih Helmmu, Kembalikan Auramu</title>
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg-color: #fbf9f6;
+            --primary-color: #2c4c38;
+            --secondary-color: #dfb15b;
+            --text-dark: #222222;
+            --text-light: #666666;
+            --white: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #e5e0da;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            font-size: 1rem;
+        }
+
+        /* --- NAVBAR & HAMBURGER --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background-color: rgba(251, 249, 246, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: 800;
+            color: var(--primary-color); letter-spacing: 2px;
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            font-size: 0.95rem; font-weight: 500;
+            color: var(--text-dark); transition: color 0.3s ease;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        .hamburger {
+            display: none; cursor: pointer; flex-direction: column; gap: 6px;
+            border: none; background: none; padding: 5px;
+        }
+        .hamburger span {
+            display: block; width: 25px; height: 2px;
+            background-color: var(--text-dark); transition: all 0.3s ease;
+        }
+
+        .mobile-menu {
+            position: fixed; top: 70px; left: -100%;
+            width: 100%; height: calc(100vh - 70px);
+            background-color: var(--bg-color);
+            display: flex; flex-direction: column; align-items: center;
+            padding-top: 50px; gap: 25px; transition: left 0.4s ease;
+            border-top: 1px solid var(--border-color); z-index: 999;
+        }
+        .mobile-menu.active { left: 0; }
+        .mobile-menu a {
+            font-size: 1.2rem; font-weight: 600;
+            text-transform: uppercase; color: var(--text-dark);
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 180px 0 120px 0;
+            background: linear-gradient(rgba(251, 249, 246, 0.6), rgba(251, 249, 246, 0.8)), url('hero_bg.jpg') no-repeat center center/cover;
+            text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-badge {
+            display: inline-block; padding: 6px 16px;
+            background-color: rgba(44, 76, 56, 0.1);
+            color: var(--primary-color); border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 20px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem; color: var(--primary-color);
+            line-height: 1.2; margin-bottom: 15px; font-weight: 800; letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.25rem; color: var(--text-light);
+            max-width: 600px; margin: 0 auto 35px auto; font-style: italic;
+        }
+
+        .btn {
+            display: inline-block; padding: 14px 35px;
+            background-color: var(--primary-color); color: var(--white);
+            font-weight: 600; border-radius: 4px; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;
+            border: 1px solid var(--primary-color); cursor: pointer;
+        }
+        .btn:hover { background-color: transparent; color: var(--primary-color); }
+
+        /* --- SPLIT CONTENT --- */
+        .split-section {
+            display: table; width: 100%; table-layout: fixed;
+            border-collapse: collapse; background-color: var(--white);
+        }
+        .split-row { display: table-row; }
+        .split-col { display: table-cell; width: 50%; vertical-align: middle; }
+        .split-text { padding: 80px 10%; }
+        .split-text h2 { font-size: 2rem; color: var(--primary-color); margin-bottom: 20px; font-weight: 700; }
+        .split-text p { color: var(--text-light); margin-bottom: 15px; font-size: 1.05rem; text-align: justify; }
+        .split-img { height: 100%; min-height: 450px; overflow: hidden; position: relative; }
+        .split-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+
+        /* --- PRODUCT VARIANT --- */
+        .product-section { background-color: #f7f4f0; }
+        .variant-grid {
+            display: table; width: 100%; table-layout: fixed;
+            border-collapse: separate; border-spacing: 30px 0;
+        }
+        .variant-card {
+            display: table-cell; background-color: var(--card-bg);
+            border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02); vertical-align: top;
+        }
+        .variant-image-holder { height: 300px; overflow: hidden; position: relative; }
+        .variant-image-holder img { width: 100%; height: 100%; object-fit: cover; }
+        .variant-badge {
+            position: absolute; top: 20px; left: 20px; background-color: var(--primary-color);
+            color: var(--white); padding: 5px 12px; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; z-index: 5;
+        }
+        .variant-content { padding: 35px; }
+        .variant-title { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 10px; font-weight: 700; }
+        .variant-desc { color: var(--text-light); font-size: 0.95rem; margin-bottom: 20px; min-height: 75px; }
+        .variant-options { background-color: var(--bg-color); padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        .options-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+        .size-selectors { display: flex; gap: 15px; margin-bottom: 15px; }
+        .size-label {
+            flex: 1; text-align: center; padding: 10px; border: 1px solid var(--border-color);
+            border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem; background-color: var(--white);
+        }
+        .size-selectors input[type="radio"] { display: none; }
+        .size-selectors input[type="radio"]:checked + .size-label { background-color: var(--primary-color); color: var(--white); border-color: var(--primary-color); }
+        .price-display { font-size: 1.4rem; font-weight: 700; color: var(--primary-color); }
+        .order-actions { display: flex; flex-direction: column; gap: 10px; }
+        .btn-order {
+            padding: 12px; font-size: 0.9rem; font-weight: 600; border-radius: 4px;
+            cursor: pointer; text-transform: uppercase; border: none; text-align: center; color: var(--white);
+        }
+        .btn-wa { background-color: #25d366; } .btn-wa:hover { background-color: #1ebd54; }
+        .btn-shopee { background-color: #ee4d2d; } .btn-shopee:hover { background-color: #d73c1d; }
+
+        /* --- REVIEWS GRID (Diperbarui) --- */
+        .reviews-section { background-color: var(--white); }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .review-card {
+            background-color: var(--bg-color); 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px;
+            padding: 40px 25px 25px 25px; 
+            text-align: center; 
+            box-shadow: 0 5px 20px rgba(44, 76, 56, 0.05);
+            margin-top: 30px; /* Space for avatar */
+        }
+        .review-user-avatar {
+            width: 70px; height: 70px; background-color: var(--border-color); border-radius: 50%;
+            margin: -75px auto 15px auto; border: 5px solid var(--white); overflow: hidden;
+            display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 1.5rem; font-weight: bold;
+        }
+        .stars { color: var(--secondary-color); font-size: 1.2rem; margin-bottom: 15px; }
+        .review-text { font-size: 0.95rem; color: var(--text-dark); font-style: italic; margin-bottom: 25px; line-height: 1.6; min-height: 80px; }
+        .review-user { font-weight: 700; color: var(--primary-color); font-size: 0.9rem; text-transform: uppercase; border-top: 1px solid var(--border-color); padding-top: 15px; display: inline-block; }
+
+        /* --- TESTIMONI GRID --- */
+        .testi-section { background-color: #f7f4f0; }
+        .testi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; }
+        .testi-item {
+            background-color: var(--white); border: 1px solid var(--border-color); aspect-ratio: 1;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border-radius: 4px;
+        }
+        .testi-item img { width: 100%; height: 100%; object-fit: cover; }
+        .testi-placeholder {
+            position: absolute; font-size: 0.75rem; color: var(--text-light); text-align: center;
+            background-color: rgba(255,255,255,0.9); width: 100%; padding: 5px; bottom: 0; border-top: 1px solid var(--border-color); z-index: 2;
+        }
+
+        /* --- MITRA SECTION --- */
+        .mitra-section { background-color: var(--white); }
+        .mitra-box-grid { display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 30px 0; }
+        .mitra-card {
+            display: table-cell; background-color: var(--bg-color); border-radius: 6px;
+            border: 1px solid var(--border-color); vertical-align: top; overflow: hidden; position: relative;
+        }
+        .mitra-content { padding: 30px; }
+        .mitra-title { font-size: 1.3rem; color: var(--primary-color); margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; }
+        .mitra-list li { position: relative; padding-left: 20px; margin-bottom: 10px; font-size: 0.95rem; color: var(--text-dark); }
+        .mitra-list li::before { content: "•"; color: var(--secondary-color); font-weight: bold; font-size: 1.2rem; position: absolute; left: 0; top: -2px; }
+        
+        .mitra-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        .mitra-photo-item { aspect-ratio: 1; border-radius: 4px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--white); position: relative; }
+        .mitra-photo-item img { width: 100%; height: 100%; object-fit: cover; }
+        .mitra-photo-label { position: absolute; bottom: 0; left: 0; font-size: 0.65rem; color: var(--text-light); background-color: rgba(255,255,255,0.9); width: 100%; padding: 2px; text-align: center; }
+
+        /* --- FOOTER --- */
+        footer { background-color: var(--primary-color); color: var(--white); padding: 70px 0 30px 0; }
+        .footer-grid { display: table; width: 100%; table-layout: fixed; }
+        .footer-col { display: table-cell; padding: 0 20px; vertical-align: top; }
+        .footer-logo { font-size: 1.8rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 15px; color: var(--secondary-color); }
+        .footer-tagline { font-size: 0.95rem; opacity: 0.8; margin-bottom: 20px; font-style: italic; }
+        .footer-heading { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; color: var(--secondary-color); }
+        .contact-info li { margin-bottom: 15px; font-size: 0.95rem; opacity: 0.9; }
+        .contact-info strong { display: block; color: var(--white); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 3px; opacity: 0.6; }
+        .social-links { display: flex; gap: 15px; margin-top: 10px; }
+        .social-link { background-color: rgba(255,255,255,0.1); padding: 10px 18px; font-size: 0.9rem; border-radius: 4px; font-weight: 500; }
+        .social-link:hover { background-color: var(--secondary-color); color: var(--primary-color); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 50px; padding-top: 25px; text-align: center; font-size: 0.85rem; opacity: 0.6; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .nav-links { display: none; } .hamburger { display: flex; }
+            .split-col, .variant-card, .mitra-card, .footer-col { display: block; width: 100%; margin-bottom: 30px; }
+            .split-img { height: 300px; min-height: 300px; } .split-text { padding: 40px 5%; }
+            .variant-grid, .mitra-box-grid, .footer-grid { display: block; width: 100%; }
+            .testi-grid { grid-template-columns: repeat(3, 1fr); }
+            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 2.5rem; } 
+        }
+        @media (max-width: 600px) {
+            .reviews-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 500px) {
+            .testi-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 2rem; } .mitra-photos-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">HELMORA</a>
+            <ul class="nav-links">
+                <li><a href="#tentang">Tentang</a></li>
+                <li><a href="#varian">Pembelian</a></li>
+                <li><a href="#ulasan">Ulasan</a></li>
+                <li><a href="#testimoni">Testimoni</a></li>
+                <li><a href="#mitra">Mitra</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Menu Toggle" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#tentang" onclick="toggleMenu()">Tentang</a>
+        <a href="#varian" onclick="toggleMenu()">Pembelian</a>
+        <a href="#ulasan" onclick="toggleMenu()">Ulasan</a>
+        <a href="#testimoni" onclick="toggleMenu()">Testimoni</a>
+        <a href="#mitra" onclick="toggleMenu()">Mitra</a>
+        <a href="#kontak" onclick="toggleMenu()">Kontak</a>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge">Inovasi Lokal Indonesia</span>
+            <h1>HELMORA</h1>
+            <p>"Bersih helmmu, kembalikan auramu"</p>
+            <div style="font-size: 1rem; color: var(--text-light); max-width: 650px; margin: -15px auto 35px auto; line-height: 1.5;">
+                Spray penghilang bau dan bakteri pada helm dengan ekstrak buah lokal dan daun sirih. Menjaga kenyamanan dan kebersihan perjalanan Anda secara instan dan alami.
+            </div>
+            <a href="#varian" class="btn">Lihat Varian Produk</a>
+        </div>
+    </section>
+
+    <section class="split-section">
+        <div class="split-row">
+            <div class="split-col">
+                <div class="split-text">
+                    <h2>Kebersihan Diri & Aksesori Harian</h2>
+                    <p>Permasalahan kebersihan diri tidak harus melakukan kebersihan langsung kedalam diri, banyak kuman dan bakteri yang menempel di tubuh melalui barang/aksesori yang sering kita gunakan justru lebih sering berinteraksi dengan tubuh kita.</p>
+                    <p>Untuk menjaga kebersihan barang/aksesori perlu adanya tindakan secara berkala. Banyak cara untuk membersihkan barang/aksesori tersebut supaya tetap bersih salah satunya dengan cara disemprotkan cairan disinfektan/pembunuhan kuman.</p>
+                </div>
+            </div>
+            <div class="split-col">
+                <div class="split-img">
+                    <img src="kebersihan_diri.jpg" alt="Kebersihan Diri">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="split-section" id="tentang" style="background-color: #f7f4f0;">
+        <div class="split-row">
+            <div class="split-col">
+                <div class="split-img">
+                    <img src="tentang_helmora.jpg" alt="Tentang Helmora">
+                </div>
+            </div>
+            <div class="split-col">
+                <div class="split-text">
+                    <h2>Tentang Helmora</h2>
+                    <p>Helmora merupakan produk penghilang bau dan bakteri pada helm dengan varian nanas-sirih dan lemon-sirih dengan ukuran botol 60ml and 100ml. Helmora sudah teruji keefektifannya dalam membunuh bakteri serta aroma dari buah lokal Indonesia.</p>
+                    <p>Bahan baku utama dari Helmora adalah ekstrak daun sirih dan ekstrak kulit nanas atau ekstrak kulit lemon yang didapatkan dari UMKM setempat dan petani daun sirih sehingga mampu memberdayakan ekonomi sirkular sekitar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-section container" id="varian">
+        <h2 class="section-title">Varian Helmora</h2>
+        <p class="section-subtitle">Pilih varian aroma alami kegemaranmu dan sesuaikan ukuran botol dengan mobilitas harianmu.</p>
+
+        <div class="variant-grid">
+            <div class="variant-card">
+                <div class="variant-image-holder">
+                    <img src="varian_lemon.jpg" alt="Helmora Lemon-Sirih">
+                    <span class="variant-badge">Fresh & Clean</span>
+                </div>
+                <div class="variant-content">
+                    <h3 class="variant-title">HELMORA LEMON-SIRIH</h3>
+                    <p class="variant-desc">Aroma clean dan fresh dari lemon asli Indonesia yang dipercaya efektif menetralisir bakteri penyebab bau tak sedap.</p>
+                    <div class="variant-options">
+                        <div class="options-title">Pilih Ukuran Botol:</div>
+                        <div class="size-selectors">
+                            <input type="radio" id="lemon-60" name="size-lemon" value="60ml" checked onclick="updatePrice('lemon', 10000)">
+                            <label for="lemon-60" class="size-label">60 ml</label>
+                            <input type="radio" id="lemon-100" name="size-lemon" value="100ml" onclick="updatePrice('lemon', 15000)">
+                            <label for="lemon-100" class="size-label">100 ml</label>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <span style="font-size: 0.9rem; font-weight: 500;">Harga:</span>
+                            <span class="price-display" id="price-lemon">Rp 10.000</span>
+                        </div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn-order btn-wa" onclick="orderWhatsApp('HELMORA LEMON-SIRIH', 'size-lemon')">Order via WhatsApp</button>
+                        <a href="https://shopee.co.id/helmora_spray" target="_blank" class="btn-order btn-shopee">Order via Shopee</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="variant-card">
+                <div class="variant-image-holder">
+                    <img src="varian_nanas.jpg" alt="Helmora Nanas-Sirih">
+                    <span class="variant-badge">Sweet & Smooth</span>
+                </div>
+                <div class="variant-content">
+                    <h3 class="variant-title">HELMORA NANAS-SIRIH</h3>
+                    <p class="variant-desc">Aroma yang lebih smooth dan sweet dari ciri khas buah nanas lokal pilihan, membuat perjalanan berkendara kian rileks.</p>
+                    <div class="variant-options">
+                        <div class="options-title">Pilih Ukuran Botol:</div>
+                        <div class="size-selectors">
+                            <input type="radio" id="nanas-60" name="size-nanas" value="60ml" checked onclick="updatePrice('nanas', 8000)">
+                            <label for="nanas-60" class="size-label">60 ml</label>
+                            <input type="radio" id="nanas-100" name="size-nanas" value="100ml" onclick="updatePrice('nanas', 13000)">
+                            <label for="nanas-100" class="size-label">100 ml</label>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <span style="font-size: 0.9rem; font-weight: 500;">Harga:</span>
+                            <span class="price-display" id="price-nanas">Rp 8.000</span>
+                        </div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn-order btn-wa" onclick="orderWhatsApp('HELMORA NANAS-SIRIH', 'size-nanas')">Order via WhatsApp</button>
+                        <a href="https://shopee.co.id/helmora_spray" target="_blank" class="btn-order btn-shopee">Order via Shopee</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews-section" id="ulasan">
+        <div class="container">
+            <h2 class="section-title">Ulasan Pelanggan</h2>
+            <p class="section-subtitle">Apa kata mereka yang telah merasakan keharuman alami dan manfaat Helmora Spray?</p>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-user-avatar">AP</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Suka banget sama varian Lemon-Sirih! Aromanya segar lemon banget, ga bikin pusing pas dipakai jalan jauh."</p>
+                    <h4 class="review-user">@andini_putri</h4>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-user-avatar">RA</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Beli yang Nanas-Sirih buat kado suami. Katanya enak, wanginya smooth ga nyengat sama sekali."</p>
+                    <h4 class="review-user">@rizki_aditya</h4>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-user-avatar">BS</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Solusi praktis buat ojek online biar penumpang selalu nyaman pakai helm cadangan. Helm ga bau apek lagi."</p>
+                    <h4 class="review-user">@budi_santoso</h4>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-user-avatar">SN</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Awalnya ragu ada campuran sirihnya, ternyata kombinasi lemonnya pas banget. Helm jadi wangi seharian."</p>
+                    <h4 class="review-user">@siti_nur</h4>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-user-avatar">RM</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Keren banget konsepnya ramah lingkungan dan memberdayakan UMKM lokal. Dukung terus produk asli Indonesia!"</p>
+                    <h4 class="review-user">@rizka_maharani</h4>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-user-avatar">NS</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Wajib punya buat pengendara harian. Harganya sangat terjangkau, isinya awet, dan wangi banget."</p>
+                    <h4 class="review-user">@nina_septiani</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testi-section" id="testimoni">
+        <div class="container">
+            <h2 class="section-title">Galeri Testimoni</h2>
+            <p class="section-subtitle">Dokumentasi kepuasan pengguna Helmora dari berbagai aktivitas berkendara.</p>
+            <div class="testi-grid" id="testiGrid"></div>
+        </div>
+    </section>
+
+    <section class="mitra-section container" id="mitra">
+        <h2 class="section-title">Kemitraan Berkelanjutan</h2>
+        <div class="mitra-box-grid">
+            <div class="mitra-card">
+                <div class="mitra-content">
+                    <h3 class="mitra-title">Mitra Penyedia Bahan Baku</h3>
+                    <ul class="mitra-list">
+                        <li>Petani Daun Sirih Lokal</li><li>UMKM Kulit Nanas Kupas</li><li>Owner Bisnis Lemon Tea</li>
+                    </ul>
+                    <div class="mitra-photos-grid">
+                        <div class="mitra-photo-item"><img src="mitra_sirih_1.jpg" alt="Petani Sirih"><div class="mitra-photo-label">Petani Sirih</div></div>
+                        <div class="mitra-photo-item"><img src="mitra_nanas_1.jpg" alt="UMKM Nanas"><div class="mitra-photo-label">UMKM Nanas</div></div>
+                        <div class="mitra-photo-item"><img src="mitra_lemon_1.jpg" alt="Lemon Tea"><div class="mitra-photo-label">Lemon Tea</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mitra-card">
+                <div class="mitra-content">
+                    <h3 class="mitra-title">Mitra Saluran Pemasaran</h3>
+                    <ul class="mitra-list">
+                        <li>Jasa Cuci Motor & Helm</li><li>Barbershop & Bengkel</li><li>Rental Motor Mahasiswa</li>
+                    </ul>
+                    <div class="mitra-photos-grid">
+                        <div class="mitra-photo-item"><img src="mitra_pemasaran_1.jpg" alt="Cuci Motor"><div class="mitra-photo-label">Cuci Motor</div></div>
+                        <div class="mitra-photo-item"><img src="mitra_pemasaran_2.jpg" alt="Barbershop"><div class="mitra-photo-label">Barbershop</div></div>
+                        <div class="mitra-photo-item"><img src="mitra_pemasaran_3.jpg" alt="Bengkel"><div class="mitra-photo-label">Bengkel</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="kontak">
+        <div class="container" style="padding: 0 0 40px 0;">
+            <div class="footer-grid">
+                <div class="footer-col" style="width: 40%;">
+                    <div class="footer-logo">HELMORA</div>
+                    <p class="footer-tagline">"Bersih helmmu, kembalikan auramu"</p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/helmoraspray_official" target="_blank" class="social-link">Instagram</a>
+                        <a href="https://tiktok.com/@Helmoraspray" target="_blank" class="social-link">TikTok</a>
+                    </div>
+                </div>
+                <div class="footer-col" style="width: 35%;">
+                    <h3 class="footer-heading">Hubungi Kami</h3>
+                    <ul class="contact-info">
+                        <li><strong>Surel Resmi</strong> helmoraspray.official@gmail.com</li>
+                        <li><strong>Lokasi Kantor</strong> Jl. Brotojoyo No. 1, Semarang Utara</li>
+                    </ul>
+                </div>
+                <div class="footer-col" style="width: 25%;">
+                    <h3 class="footer-heading">Layanan Pembelian</h3>
+                    <ul class="contact-info">
+                        <li><strong>Hotline WA</strong> 08989366557</li>
+                        <li><strong>Shopee</strong> helmora_spray</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 HELMORA Indonesia. All Rights Reserved.</p></div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        function updatePrice(variant, price) {
+            document.getElementById(`price-${variant}`).innerText = `Rp ${price.toLocaleString('id-ID')}`;
+        }
+
+        function orderWhatsApp(variantName, radioName) {
+            const size = document.querySelector(`input[name="${radioName}"]:checked`).value;
+            const msg = encodeURIComponent(`Halo Helmora, saya mau pesan:\nVarian: ${variantName}\nUkuran: ${size}`);
+            window.open(`https://wa.me/628989366557?text=${msg}`, '_blank');
+        }
+
+        // Generate 20 Image Testimoni otomatis untuk mencegah kode kepotong
+        document.addEventListener("DOMContentLoaded", () => {
+            const grid = document.getElementById('testiGrid');
+            let html = '';
+            for(let i=1; i<=20; i++) {
+                html += `<div class="testi-item">
+                            <img src="testi${i}.jpg" alt="Testimoni ${i}">
+                            <div class="testi-placeholder">testi${i}.jpg</div>
+                         </div>`;
+            }
+            grid.innerHTML = html;
+        });
+    </script>
+</body>
+</html>
